@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastrar lote</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<header class="cabecalho">
+    <h1>Sistema Bazar</h1>
+    <a th:href="@{/lotes}" class="botao-sair">Voltar</a>
+</header>
+
+<main class="conteudo">
+    <section class="formulario">
+        <h2>Cadastrar lote</h2>
+
+        <p class="mensagem-erro" th:if="${param.erro}">
+            Erro ao cadastrar o lote. Confira os dados.
+        </p>
+
+        <form th:action="@{/lotes/salvar}" method="post">
+            <label for="dataEntrega">Data de entrega</label>
+            <input id="dataEntrega" name="dataEntrega" type="date">
+
+            <label for="observacao">Observações</label>
+            <textarea id="observacao" name="observacao"
+                      placeholder="Descreva o lote"></textarea>
+
+            <label for="orgaoDonatarioId">Órgão donatário</label>
+            <select id="orgaoDonatarioId" name="orgaoDonatarioId" required>
+                <option value="">Selecione o destinatário</option>
+                <option th:each="donatario : ${donatarios}"
+                        th:value="${donatario.id}"
+                        th:text="${donatario.nome}">
+                </option>
+            </select>
+
+            <button type="submit">Cadastrar lote</button>
+        </form>
+    </section>
+</main>
+</body>
+</html>

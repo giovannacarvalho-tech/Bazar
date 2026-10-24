@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lotes | Sistema Bazar</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<header class="cabecalho">
+    <h1>Sistema Bazar</h1>
+    <a th:href="@{/home}" class="botao-sair">Início</a>
+</header>
+
+<main class="conteudo">
+    <div class="titulo-pagina">
+        <div>
+            <h2>Lotes</h2>
+            <p>Consulte os lotes e seus produtos.</p>
+        </div>
+
+        <a th:if="${session.tipoUsuario == 'FISCALIZADOR'}"
+           th:href="@{/lotes/novo}" class="botao">
+            Novo lote
+        </a>
+    </div>
+
+    <p class="mensagem-erro" th:if="${erro}" th:text="${erro}"></p>
+
+    <div class="tabela-container">
+        <table>
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Data de entrega</th>
+                <th>Observações</th>
+                <th>Status</th>
+                <th>Produtos</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr th:each="lote : ${lotes}">
+                <td th:text="${lote.id}"></td>
+                <td th:text="${lote.dataEntrega != null ?
+                    #temporals.format(lote.dataEntrega, 'dd/MM/yyyy') : '-'}"></td>
+                <td th:text="${lote.observacao}"></td>
+                <td>
+                    <span class="status"
+                          th:text="${lote.status}"></span>
+                </td>
+                <td>
+                    <a th:href="@{/produtos/lote/{id}(id=${lote.id})}"
+                       class="botao botao-pequeno">
+                        Ver produtos
+                    </a>
+                </td>
+            </tr>
+
+            <tr th:if="${#lists.isEmpty(lotes)}">
+                <td colspan="5">Nenhum lote encontrado.</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <a th:href="@{/home}" class="link-voltar">Voltar ao início</a>
+</main>
+</body>
+</html>

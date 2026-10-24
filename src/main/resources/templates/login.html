@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Sistema Bazar</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body class="pagina-login">
+
+<main class="cartao-login">
+    <h1>Sistema Bazar</h1>
+    <p class="subtitulo">Gestão de doações e produtos</p>
+
+    <p class="mensagem-erro" th:if="${erro}" th:text="${erro}"></p>
+
+    <form th:action="@{/login}" method="post">
+        <label for="tipo">Tipo de organização</label>
+        <select id="tipo" name="tipo" required>
+            <option value="">Selecione uma opção</option>
+            <option value="FISCALIZADOR">Órgão fiscalizador</option>
+            <option value="DONATARIO">Órgão donatário</option>
+        </select>
+
+        <label for="email">E-mail</label>
+        <input type="email" id="email" name="email"
+               placeholder="Digite seu e-mail" required>
+
+        <label for="senha">Senha</label>
+        <input type="password" id="senha" name="senha"
+               placeholder="Digite sua senha" required>
+
+        <button type="submit">Entrar</button>
+    </form>
+</main>
+
+</body>
+</html>

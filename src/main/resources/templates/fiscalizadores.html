@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Órgãos fiscalizadores | Sistema Bazar</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<header class="cabecalho">
+    <h1>Sistema Bazar</h1>
+    <a th:href="@{/home}" class="botao-sair">Início</a>
+</header>
+
+<main class="conteudo">
+    <div class="titulo-pagina">
+        <div>
+            <h2>Órgãos fiscalizadores</h2>
+            <p>Organizações responsáveis pelo cadastro dos lotes.</p>
+        </div>
+        <a th:href="@{/fiscalizadores/novo}" class="botao">
+            Novo fiscalizador
+        </a>
+    </div>
+
+    <p class="mensagem-erro" th:if="${erro}" th:text="${erro}"></p>
+
+    <div class="tabela-container">
+        <table>
+            <thead>
+            <tr>
+                <th>Nome</th>
+                <th>E-mail</th>
+                <th>Telefone</th>
+                <th>Endereço</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr th:each="orgao : ${fiscalizadores}">
+                <td th:text="${orgao.nome}"></td>
+                <td th:text="${orgao.email}"></td>
+                <td th:text="${orgao.telefone}"></td>
+                <td th:text="${orgao.endereco}"></td>
+            </tr>
+
+            <tr th:if="${#lists.isEmpty(fiscalizadores)}">
+                <td colspan="4">Nenhum órgão fiscalizador cadastrado.</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</main>
+</body>
+</html>

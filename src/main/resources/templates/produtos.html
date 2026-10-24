@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Produtos | Sistema Bazar</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<header class="cabecalho">
+    <h1>Sistema Bazar</h1>
+    <a th:href="@{/lotes}" class="botao-sair">Voltar aos lotes</a>
+</header>
+
+<main class="conteudo">
+    <h2>Produtos do lote</h2>
+
+    <section class="cartao" th:if="${lote != null}">
+        <p><strong>Lote:</strong> <span th:text="${lote.id}"></span></p>
+        <p><strong>Status:</strong> <span th:text="${lote.status}"></span></p>
+        <p><strong>Observações:</strong>
+            <span th:text="${lote.observacao}"></span>
+        </p>
+    </section>
+
+    <p class="mensagem-erro" th:if="${erro}" th:text="${erro}"></p>
+
+    <div class="tabela-container">
+        <table>
+            <thead>
+            <tr>
+                <th>Código</th>
+                <th>Produto</th>
+                <th>Descrição</th>
+                <th>Ações</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr th:each="produto : ${produtos}">
+                <td th:text="${produto.codigo}"></td>
+                <td th:text="${produto.nome}"></td>
+                <td th:text="${produto.descricao}"></td>
+                <td>
+                    <form th:if="${session.tipoUsuario == 'FISCALIZADOR'
+                    and session.orgaoFiscalizador != null
+                    and session.orgaoFiscalizador.id == lote.orgaoFiscalizadorId}"
+                          th:action="@{/produtos/excluir}"
+                          method="post"
+                          onsubmit="return confirm('Tem certeza que deseja excluir este produto?');">
+
+                        <input type="hidden" name="codigo" th:value="${produto.codigo}">
+                        <input type="hidden" name="loteId" th:value="${lote.id}">
+                        <button type="submit" class="botao-excluir">Excluir</button>
+                    </form>
+                </td>
+            </tr>
+
+            <tr th:if="${#lists.isEmpty(produtos)}">
+                <td colspan="4">Nenhum produto cadastrado neste lote.</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <section class="formulario"
+             th:if="${session.tipoUsuario == 'FISCALIZADOR'
+                     and lote != null
+                     and session.orgaoFiscalizador != null
+                     and lote.orgaoFiscalizadorId == session.orgaoFiscalizador.id}">
+        <h3>Adicionar produto</h3>
+
+        <form th:action="@{/produtos/salvar}" method="post">
+            <input type="hidden" name="loteId" th:value="${lote.id}">
+
+            <label for="nome">Nome do produto</label>
+            <input id="nome" name="nome" required>
+
+            <label for="descricao">Descrição</label>
+            <textarea id="descricao" name="descricao"></textarea>
+
+            <button type="submit">Adicionar produto</button>
+        </form>
+    </section>
+</main>
+</body>
+</html>

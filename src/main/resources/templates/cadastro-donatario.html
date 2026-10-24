@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastrar donatário</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<header class="cabecalho">
+    <h1>Sistema Bazar</h1>
+    <a th:href="@{/home}" class="botao-sair">Voltar</a>
+</header>
+
+<main class="conteudo">
+    <section class="formulario">
+        <h2>Cadastrar órgão donatário</h2>
+
+        <p class="mensagem-erro" th:if="${param.erro}">
+            Não foi possível cadastrar. Verifique os dados e tente novamente.
+        </p>
+
+        <form th:action="@{/donatarios/salvar}" method="post">
+            <label for="nome">Nome</label>
+            <input id="nome" name="nome" required>
+
+            <label for="descricao">Descrição</label>
+            <textarea id="descricao" name="descricao"></textarea>
+
+            <label for="endereco">Endereço</label>
+            <input id="endereco" name="endereco" required>
+
+            <label for="telefone">Telefone</label>
+            <input id="telefone" name="telefone" required>
+
+            <label for="horarioFuncionamento">Horário de funcionamento</label>
+            <input id="horarioFuncionamento"
+                   name="horarioFuncionamento" required>
+
+            <label for="email">E-mail</label>
+            <input id="email" name="email" type="email" required>
+
+            <label for="senha">Senha</label>
+            <input id="senha" name="senha" type="password"
+                   minlength="6" required>
+
+            <button type="submit">Cadastrar donatário</button>
+        </form>
+    </section>
+</main>
+</body>
+</html>

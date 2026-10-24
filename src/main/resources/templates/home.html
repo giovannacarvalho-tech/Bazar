@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página inicial | Sistema Bazar</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<header class="cabecalho">
+    <h1>Sistema Bazar</h1>
+    <a th:href="@{/logout}" class="botao-sair">Sair</a>
+</header>
+
+<main class="conteudo">
+    <h2>Bem-vindo(a) ao Bazar!</h2>
+
+    <p>
+        Gerencie os lotes de produtos e acompanhe as doações
+        de forma simples.
+    </p>
+
+    <section class="menu">
+        <article class="cartao">
+            <h3>Lotes</h3>
+            <p>Consulte os lotes disponíveis para sua organização.</p>
+            <a th:href="@{/lotes}" class="botao">Ver lotes</a>
+        </article>
+
+        <article class="cartao"
+                 th:if="${tipoUsuario == 'FISCALIZADOR'}">
+            <h3>Órgãos donatários</h3>
+            <p>Consulte as organizações que recebem as doações.</p>
+            <a th:href="@{/donatarios}" class="botao">
+                Ver donatários
+            </a>
+        </article>
+
+        <article class="cartao"
+                 th:if="${tipoUsuario == 'FISCALIZADOR'}">
+            <h3>Cadastrar lote</h3>
+            <p>Registre um novo lote de produtos para doação.</p>
+            <a th:href="@{/lotes/novo}" class="botao">
+                Novo lote
+            </a>
+        </article>
+
+        <article class="cartao"
+                 th:if="${tipoUsuario == 'DONATARIO'}">
+            <h3>Produtos</h3>
+            <p>Consulte os produtos dos lotes destinados à sua organização.</p>
+            <a th:href="@{/lotes}" class="botao">
+                Consultar produtos
+            </a>
+        </article>
+    </section>
+</main>
+</body>
+</html>
